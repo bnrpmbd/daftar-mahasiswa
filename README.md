@@ -20,14 +20,14 @@ Repository ini berisi aplikasi mini dengan tema **Daftar Mahasiswa & Nilai** yan
 
 ## 🚀 Cara Menjalankan
 1. Clone repository ini:
-   $ git clone https://github.com/username/daftar-mahasiswa.git
+- $ git clone https://github.com/username/daftar-mahasiswa.git
 2. Jalankan menggunakan server lokal (XAMPP/Laragon/Apache) atau melalui perintah berikut.
-   $ cd daftar-mahasiswa
-   $ php -S localhost:8000
+- $ cd daftar-mahasiswa
+- $ php -S localhost:8000
 3. Akses melalui browser di:
-   http://localhost/daftar-mahasiswa/index.php
-   atau
-   http://localhost:8000/index.php
+- http://localhost/daftar-mahasiswa/index.php
+- atau
+* http://localhost:8000/index.php
 
 ---
 
