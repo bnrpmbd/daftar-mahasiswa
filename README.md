@@ -27,7 +27,7 @@ Repository ini berisi aplikasi mini dengan tema **Daftar Mahasiswa & Nilai** yan
 3. Akses melalui browser di:
 - http://localhost/daftar-mahasiswa/index.php
 - atau
-* http://localhost:8000/index.php
+- http://localhost:8000/index.php
 
 ---
 
