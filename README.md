@@ -1,6 +1,6 @@
 # 📚 Aplikasi Mini Daftar Mahasiswa & Nilai
 
-## 🇮🇩 Deskripsi (Bahasa Indonesia)
+## Deskripsi
 Repository ini berisi aplikasi mini dengan tema **Daftar Mahasiswa & Nilai** yang dibangun menggunakan **PHP murni**, tanpa framework tambahan.  
 
 ### ✨ Fitur
