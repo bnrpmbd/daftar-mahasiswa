@@ -135,12 +135,12 @@ if ($_POST) {
         <form method="POST" action="">
             <div class="form-group">
                 <label for="nama">Nama:</label>
-                <input type="text" id="nama" name="nama" placeholder="Banar Pambudi" required>
+                <input type="text" id="nama" name="nama" placeholder="Nama Lengkap" required>
             </div>
             
             <div class="form-group">
                 <label for="nim">NIM:</label>
-                <input type="text" id="nim" name="nim" placeholder="21060123140160" required>
+                <input type="text" id="nim" name="nim" placeholder="Maksimal 16 digit" required>
             </div>
             
             <div class="form-group">
