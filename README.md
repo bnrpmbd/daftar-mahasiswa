@@ -54,3 +54,6 @@ Repository ini berisi aplikasi mini dengan tema **Daftar Mahasiswa & Nilai** yan
 
 ### Halaman Tambah Mahasiswa
 ![Tambah Mahasiswa](assets/img/screenshot-form.png)
+
+### Tampilan Setelah Data Ditambahkan
+![Tambah Mahasiswa](assets/img/screenshot-data_baru.png)
