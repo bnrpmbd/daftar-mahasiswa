@@ -553,3 +553,64 @@ table .grade-E {
         transform: translateY(0);
     }
 }
+
+/* Data Status Styling */
+.data-updated {
+    background-color: #fff3cd !important;
+    border-left: 4px solid #ffc107;
+}
+
+.data-new {
+    background-color: #d4edda !important;
+    border-left: 4px solid #28a745;
+}
+
+.update-info {
+    background-color: #e2e3e5;
+    border: 1px solid #d6d8db;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+    border-left: 4px solid #17a2b8;
+}
+
+.update-info p {
+    margin: 0;
+    color: #495057;
+    line-height: 1.5;
+}
+
+/* Enhanced Result Section */
+.result-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Duplicate Warning */
+.duplicate-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-left: 4px solid #f39c12;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.duplicate-warning p {
+    margin: 0;
+    color: #856404;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

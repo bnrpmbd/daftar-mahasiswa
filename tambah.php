@@ -68,12 +68,31 @@ if ($_POST) {
         // Baca data yang sudah ada
         $mahasiswa = bacaData($dataFile);
         
-        // Tambahkan data baru ke akhir array
-        array_push($mahasiswa, $data_input);
+        // Cek apakah data dengan NIM dan mata kuliah yang sama sudah ada
+        $data_found = false;
+        $update_index = -1;
+        
+        foreach ($mahasiswa as $index => $mhs) {
+            if ($mhs['nim'] == $nim && $mhs['mk'] == $mk) {
+                $data_found = true;
+                $update_index = $index;
+                break;
+            }
+        }
+        
+        if ($data_found) {
+            // Update data yang sudah ada
+            $mahasiswa[$update_index] = $data_input;
+            $action_message = "Data mahasiswa dengan NIM $nim untuk mata kuliah '$mk' berhasil diperbarui!";
+        } else {
+            // Tambahkan data baru ke akhir array
+            array_push($mahasiswa, $data_input);
+            $action_message = "Data mahasiswa baru berhasil ditambahkan!";
+        }
         
         // Simpan ke file
         if (simpanData($dataFile, $mahasiswa)) {
-            $success = "Data berhasil ditambahkan dan tersimpan permanen!";
+            $success = $action_message;
         } else {
             $error = "Gagal menyimpan data!";
         }
@@ -128,10 +147,33 @@ if ($_POST) {
                 <label for="mk">Mata Kuliah:</label>
                 <select id="mk" name="mk" required onchange="toggleMataKuliahLain()">
                     <option value="">Pilih Mata Kuliah</option>
-                    <option value="Pengembangan Web">Pengembangan Web</option>
-                    <option value="Komputasi Cerdas">Komputasi Cerdas</option>
-                    <option value="Basis Data">Basis Data</option>
-                    <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+                    <?php
+                    // Ambil mata kuliah yang sudah ada dari data
+                    $existing_data = bacaData($dataFile);
+                    $mata_kuliah_existing = [];
+                    
+                    // Mata kuliah default
+                    $mata_kuliah_default = [
+                        "Pengembangan Web",
+                        "Komputasi Cerdas", 
+                        "Basis Data",
+                        "Rekayasa Perangkat Lunak"
+                    ];
+                    
+                    // Gabungkan dengan mata kuliah dari data yang sudah ada
+                    if (!empty($existing_data)) {
+                        $mata_kuliah_from_data = array_unique(array_column($existing_data, 'mk'));
+                        $mata_kuliah_existing = array_unique(array_merge($mata_kuliah_default, $mata_kuliah_from_data));
+                    } else {
+                        $mata_kuliah_existing = $mata_kuliah_default;
+                    }
+                    
+                    sort($mata_kuliah_existing);
+                    
+                    foreach ($mata_kuliah_existing as $mk) {
+                        echo "<option value=\"" . htmlspecialchars($mk) . "\">" . htmlspecialchars($mk) . "</option>";
+                    }
+                    ?>
                     <option value="lainnya">➕ Tambah Mata Kuliah Baru</option>
                 </select>
                 
@@ -154,7 +196,13 @@ if ($_POST) {
         
         <?php if ($data_input): ?>
         <div class="result-section">
-            <h2>Data yang Baru Ditambahkan:</h2>
+            <h2>
+                <?php if (isset($data_found) && $data_found): ?>
+                    🔄 Data yang Diperbarui:
+                <?php else: ?>
+                    ✅ Data yang Baru Ditambahkan:
+                <?php endif; ?>
+            </h2>
             <table>
                 <thead>
                     <tr>
@@ -166,7 +214,7 @@ if ($_POST) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="<?php echo isset($data_found) && $data_found ? 'data-updated' : 'data-new'; ?>">
                         <td><?php echo htmlspecialchars($data_input['nama']); ?></td>
                         <td><?php echo htmlspecialchars($data_input['nim']); ?></td>
                         <td><?php echo htmlspecialchars($data_input['mk']); ?></td>
@@ -175,6 +223,13 @@ if ($_POST) {
                     </tr>
                 </tbody>
             </table>
+            
+            <?php if (isset($data_found) && $data_found): ?>
+                <div class="update-info">
+                    <p><strong>ℹ️ Info:</strong> Data dengan NIM yang sama untuk mata kuliah ini sudah ada sebelumnya dan telah diperbarui dengan data baru.</p>
+                </div>
+            <?php endif; ?>
+            
             <div class="action-buttons">
                 <a href="index.php" class="btn-primary">Lihat Semua Data</a>
                 <a href="tambah.php" class="btn-secondary">Tambah Data Lagi</a>
@@ -241,6 +296,40 @@ if ($_POST) {
                 return false;
             }
         });
+        
+        // Fungsi untuk mengecek duplikasi data
+        function checkDuplicateData() {
+            const nim = document.getElementById('nim').value.trim();
+            const mk = document.getElementById('mk').value;
+            const mkBaru = document.getElementById('mk_baru').value.trim();
+            
+            const finalMK = mk === 'lainnya' ? mkBaru : mk;
+            
+            if (nim && finalMK) {
+                // Tampilkan peringatan jika kemungkinan data akan diupdate
+                const warningDiv = document.getElementById('duplicate-warning');
+                if (warningDiv) {
+                    warningDiv.remove();
+                }
+                
+                // Buat peringatan baru
+                const warning = document.createElement('div');
+                warning.id = 'duplicate-warning';
+                warning.className = 'duplicate-warning';
+                warning.innerHTML = `
+                    <p><strong>⚠️ Perhatian:</strong> Jika data dengan NIM <strong>${nim}</strong> untuk mata kuliah <strong>${finalMK}</strong> sudah ada, maka data lama akan diganti dengan data baru.</p>
+                `;
+                
+                // Sisipkan sebelum tombol submit
+                const submitButton = document.querySelector('button[type="submit"]');
+                submitButton.parentNode.insertBefore(warning, submitButton);
+            }
+        }
+        
+        // Event listeners untuk mengecek duplikasi
+        document.getElementById('nim').addEventListener('blur', checkDuplicateData);
+        document.getElementById('mk').addEventListener('change', checkDuplicateData);
+        document.getElementById('mk_baru').addEventListener('blur', checkDuplicateData);
     </script>
 </body>
 </html>
