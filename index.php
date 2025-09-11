@@ -1,3 +1,9 @@
+<!--********************
+ Nama           : Banar Pambudi
+ NIM            : 21060123140160
+ Mata Kuliah    : Pengembangan Web
+********************-->
+
 <?php
 // File untuk menyimpan data
 $dataFile = 'data/mahasiswa.json';
