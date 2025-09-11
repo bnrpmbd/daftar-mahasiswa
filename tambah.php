@@ -140,7 +140,7 @@ if ($_POST) {
             
             <div class="form-group">
                 <label for="nim">NIM:</label>
-                <input type="text" id="nim" name="nim" placeholder="Maksimal 16 digit" required>
+                <input type="text" id="nim" name="nim" placeholder="Maksimal 16 Digit" required>
             </div>
             
             <div class="form-group">
